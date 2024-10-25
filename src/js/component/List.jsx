@@ -8,14 +8,9 @@ export const List = () => {
             setListTask(
                 [...listTask, task]
             );
-        }
-    }
-    const deleteTask = (index) => {
-        var newList = [...listTask];
-        newList.splice(index, 1)
-        setListTask (newList)
-        console.log(newList)
         
+            setTask("")
+        }
     }
     return (
         <div className='masterContainer'>
@@ -26,9 +21,16 @@ export const List = () => {
             <div className='containerList'>
                 <input type="text" placeholder='What needs to be done?' onKeyDown={handleKeyDown} value={task} onChange={e => setTask(e.target.value)} />
                 <div className='listTasks'>
-                    {listTask.length ? listTask.map((value, index) => (<div key={index}>  {value} <button onClick={() => deleteTask(index)}> X </button> </div>)) : <span>No tasks, add a task</span>}
+                    {listTask.length ? listTask.map((value, index) => (<div className='individualTask' key={index}>  {value} <button className='deleteButton' onClick={() => setListTask(listTask => listTask.filter((task, i) => (i != index)))}> X </button> </div>)) : <span>No tasks, add a task</span>}
 
                 </div>
+                <div className='counter'>
+                    {listTask.length} <span> item left </span>
+                </div>
+            </div>
+            <div className='cotaninerboxsahdow'>
+                <div className='boxafter1'></div>
+                <div className='boxafter2'></div>
             </div>
 
         </div>

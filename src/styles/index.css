@@ -10,7 +10,8 @@
 
 */
 body {
-    background-color: rgba(253, 245, 218, 255);
+    background-color: #D2E0FB;
+    font-family: math;
 }
 
 .masterContainer {
@@ -27,12 +28,94 @@ body {
     align-items: center;
     width: 525px;
     height: auto;
-    background-color: rgb(255, 255, 255);
-    border: 2px solid red;
+    background-color: #FEF9D9;
+    border: 3px solid #8EACCD;
     flex-direction: column;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.containerList {
-width: ;
-height: ;
+.containerList input {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    min-width: 100%;
+    margin-bottom: 20px;
+    color: #59483e;
+    opacity: .50;
+
+}
+
+h1 {
+    color: #59483e;
+}
+
+.cotaninerboxsahdow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.listTasks {
+    min-width: 100%;
+}
+
+
+.individualTask {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    align-items: center;
+}
+.individualTask:hover{
+    box-shadow: #DEE5D4 0px 20px 30px -10px;
+    border-radius: 20px;
+}
+.individualTask button {
+    border: none;
+    background-color: transparent;
+    opacity: .6;
+    color: #8EACCD;
+    padding: 2px;
+    font-size: 20px;
+    font-family: monospace;
+    font-weight: bold;
+}
+.individualTask .deleteButton {
+    visibility: hidden;
+}
+
+.individualTask:hover .deleteButton {
+    visibility: visible;
+}
+.listTasks span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.counter{
+    color:#8EACCD ;
+    font-size: 12px; 
+    min-width: 100%;
+
+}
+.boxafter1 {
+    display: flex;
+    flex-direction: column;
+    background-color: #FEF9D9;
+    border: 1px solid #8EACCD;
+    width: 510px;
+    height: 6px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.boxafter2 {
+    display: flex;
+    flex-direction: column;
+    background-color: #FEF9D9;
+    border: 1px solid #8EACCD;
+    width: 500px;
+    height: 6px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
