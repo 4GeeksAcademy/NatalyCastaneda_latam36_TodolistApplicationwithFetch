@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const List = () => {
     const [task, setTask] = useState("")
@@ -8,10 +8,29 @@ export const List = () => {
             setListTask(
                 [...listTask, task]
             );
-        
+
             setTask("")
         }
     }
+    const getTasks = async () => {
+        try {
+            const response = await fetch('https://playground.4geeks.com/todo/users/nath1710')
+            if (response.status !== 200) {
+                console.log(error)
+                return
+            }
+            const responseBody = await response.json()
+            console.log(responseBody.todos)
+            setListTask(responseBody.todos)
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+    useEffect(() => {
+        getTasks()
+    }, [])
     return (
         <div className='masterContainer'>
             <div></div>

@@ -7,8 +7,9 @@ import List from "./List";
 
 //create your first component
 const Home = () => {
+
 	return (
-		<List> </List>
+		<List></List>
 	);
 };
 
