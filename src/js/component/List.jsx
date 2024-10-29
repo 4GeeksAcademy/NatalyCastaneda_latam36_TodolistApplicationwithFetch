@@ -5,20 +5,17 @@ export const List = () => {
     const [listTask, setListTask] = useState([])
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            setListTask(
-                [...listTask, task]
-            );
-
-            setTask("")
+            // setListTask(
+            //     [...listTask, task]
+            // );
+            postTask();
+            setTask("");
+            
         }
     }
     const getTasks = async () => {
         try {
             const response = await fetch('https://playground.4geeks.com/todo/users/nath1710')
-            if (response.status !== 200) {
-                console.log(error)
-                return
-            }
             const responseBody = await response.json()
             console.log(responseBody.todos)
             setListTask(responseBody.todos)
@@ -31,6 +28,27 @@ export const List = () => {
     useEffect(() => {
         getTasks()
     }, [])
+
+    const postTask = async () => {
+        try {
+            const response = await fetch('https://playground.4geeks.com/todo/todos/nath1710', {
+                method: "POST",
+                body: JSON.stringify({
+                    "label": task,
+                    "is_done": false
+                  }),
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              })
+            const responseBody = await response.json()
+            console.log(responseBody)
+            getTasks()
+        } catch (error) {
+            console.log(error)
+        }
+    
+    }
     return (
         <div className='masterContainer'>
             <div></div>
@@ -40,7 +58,7 @@ export const List = () => {
             <div className='containerList'>
                 <input type="text" placeholder='What needs to be done?' onKeyDown={handleKeyDown} value={task} onChange={e => setTask(e.target.value)} />
                 <div className='listTasks'>
-                    {listTask.length ? listTask.map((value, index) => (<div className='individualTask' key={index}>  {value} <button className='deleteButton' onClick={() => setListTask(listTask => listTask.filter((task, i) => (i != index)))}> X </button> </div>)) : <span>No tasks, add a task</span>}
+                    {listTask.length ? listTask.map((value, index) => (<div className='individualTask' key={index}>  {value.label} <button className='deleteButton' onClick={() => setListTask(listTask => listTask.filter((task, i) => (i != index)))}> X </button> </div>)) : <span>No tasks, add a task</span>}
 
                 </div>
                 <div className='counter'>
