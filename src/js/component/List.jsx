@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export const List = () => {
     const [task, setTask] = useState("")
     const [listTask, setListTask] = useState([])
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            // setListTask(
-            //     [...listTask, task]
-            // );
+
             postTask();
             setTask("");
-            
+
+
         }
     }
     const getTasks = async () => {
@@ -25,8 +26,24 @@ export const List = () => {
         }
     }
 
+    const createProfile = async () => {
+        try {
+            const response = await fetch('https://playground.4geeks.com/todo/users/nath1710', {
+                method: "POST"
+            })
+            if (response.status == 400) {
+                console.log("User alredy exists")
+                return
+            }
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
     useEffect(() => {
-        getTasks()
+        getTasks();
+        createProfile();
     }, [])
 
     const postTask = async () => {
@@ -36,18 +53,41 @@ export const List = () => {
                 body: JSON.stringify({
                     "label": task,
                     "is_done": false
-                  }),
+                }),
                 headers: {
-                  "Content-Type": "application/json"
+                    "Content-Type": "application/json"
                 }
-              })
+            })
             const responseBody = await response.json()
             console.log(responseBody)
             getTasks()
         } catch (error) {
             console.log(error)
         }
-    
+
+    }
+    const deleteTask = async (taskId) => {
+        try {
+            const response = await fetch('https://playground.4geeks.com/todo/todos/' + taskId, {
+                method: "DELETE"
+            }
+
+            )
+            getTasks()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const deleteAllTasks = async () => {
+        try {
+            listTask.map((value) => deleteTask(value.id))
+
+
+
+        } catch (error) {
+            console.log(error)
+        }
+
     }
     return (
         <div className='masterContainer'>
@@ -58,7 +98,7 @@ export const List = () => {
             <div className='containerList'>
                 <input type="text" placeholder='What needs to be done?' onKeyDown={handleKeyDown} value={task} onChange={e => setTask(e.target.value)} />
                 <div className='listTasks'>
-                    {listTask.length ? listTask.map((value, index) => (<div className='individualTask' key={index}>  {value.label} <button className='deleteButton' onClick={() => setListTask(listTask => listTask.filter((task, i) => (i != index)))}> X </button> </div>)) : <span>No tasks, add a task</span>}
+                    {listTask.length ? listTask.map((value, index) => (<div className='individualTask' key={index}>  {value.label} <button className='deleteButton' onClick={() => deleteTask(value.id)}> X </button> </div>)) : <span>No tasks, add a task</span>}
 
                 </div>
                 <div className='counter'>
@@ -70,6 +110,9 @@ export const List = () => {
                 <div className='boxafter2'></div>
             </div>
 
+            <div>
+                <button  className="deleteAll" onClick={() => deleteAllTasks()}> <FontAwesomeIcon icon={faTrash} /> &nbsp; Delete all </button>
+            </div>
         </div>
     )
 }
