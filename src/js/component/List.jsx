@@ -14,18 +14,6 @@ export const List = () => {
 
         }
     }
-    const getTasks = async () => {
-        try {
-            const response = await fetch('https://playground.4geeks.com/todo/users/nath1710')
-            const responseBody = await response.json()
-            console.log(responseBody.todos)
-            setListTask(responseBody.todos)
-        } catch (error) {
-            console.log(error)
-
-        }
-    }
-
     const createProfile = async () => {
         try {
             const response = await fetch('https://playground.4geeks.com/todo/users/nath1710', {
@@ -37,13 +25,31 @@ export const List = () => {
             }
         } catch (error) {
             console.log(error)
-
+            
+        }
+    }
+    const getTasks = async () => {
+        try {
+            const response = await fetch('https://playground.4geeks.com/todo/users/nath1710')
+            if (response.status == 404) {
+                console.log("User not found, creating user 😎")
+                await createProfile()
+                getTasks()
+                return
+            }
+            const responseBody = await response.json()
+            console.log(responseBody.todos)
+            setListTask(responseBody.todos)
+            
+        } catch (error) {
+            console.log(error)
         }
     }
 
+    
+
     useEffect(() => {
         getTasks();
-        createProfile();
     }, [])
 
     const postTask = async () => {
@@ -80,9 +86,11 @@ export const List = () => {
     }
     const deleteAllTasks = async () => {
         try {
-            listTask.map((value) => deleteTask(value.id))
-
-
+            const response = await fetch('https://playground.4geeks.com/todo/users/nath1710', {
+                method: "DELETE"
+            })
+            await createProfile();
+            getTasks();
 
         } catch (error) {
             console.log(error)
@@ -111,7 +119,7 @@ export const List = () => {
             </div>
 
             <div>
-                <button  className="deleteAll" onClick={() => deleteAllTasks()}> <FontAwesomeIcon icon={faTrash} /> &nbsp; Delete all </button>
+                <button className="deleteAll" onClick={() => deleteAllTasks()}> <FontAwesomeIcon icon={faTrash} /> &nbsp; Delete all </button>
             </div>
         </div>
     )
